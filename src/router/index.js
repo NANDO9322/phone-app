@@ -1,17 +1,15 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createMemoryHistory } from 'vue-router';
 import DialPad from '../components/DialPad.vue';
 
-const routes = [
-  {
-    path: '/',
-    name: 'DialPad',
-    component: DialPad
-  }
-];
-
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+  history: createMemoryHistory(),
+  routes: [
+    {
+      path: '/',
+      name: 'DialPad',
+      component: DialPad
+    }
+  ]
 });
 
 export default router;

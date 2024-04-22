@@ -8,11 +8,9 @@
 </template>
 
 <script>
-import { createApp } from 'vue';
 import PhoneIcon from './components/PhoneIcon.vue';
 import PhoneDisplay from './components/PhoneDisplay.vue';
 import PhoneKeypad from './components/PhoneKeyPad.vue';
-import router from './router';
 
 export default {
   name: 'App',
@@ -31,10 +29,6 @@ export default {
       // Implemente a lógica para lidar com a tecla pressionada
       this.displayText += key;
     }
-  },
-  created() {
-    // Crie a aplicação Vue
-    createApp.use(router).mount('#app');
   }
 }
 </script>
