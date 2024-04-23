@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <PhoneIcon />
+    <!-- <PhoneIcon />
     <PhoneDisplay :displayText="displayText" />
-    <PhoneKeypad @keypressed="handleKeyPressed" />
+    <PhoneKeypad @keypressed="handleKeyPressed" /> -->
     <router-view />
   </div>
 </template>
