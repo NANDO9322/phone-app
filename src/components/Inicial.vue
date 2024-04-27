@@ -1,13 +1,19 @@
 <template>
   <div>
     <button class="button-topper" @click="alterVisible">
-      <img src="../assets/icons/X.svg" alt="" />
+      <img :src="iconPath" alt="" />
     </button>
     <button @click="recebendo">Recebendo ligacao</button>
 
     <div
       v-if="visible"
-      class="telefone-topper"
+      :class="{
+        'telefone-topper': true,
+        'calling-state':
+          stateCall === 'calling' ||
+          stateCall === 'inCall' ||
+          stateCall === 'receiving',
+      }"
       style="
         height: 55vh;
         width: 30vh;
@@ -16,7 +22,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: #0494fc;
       "
     >
       <div
@@ -112,21 +117,136 @@
         </div>
       </div>
 
-      <div v-if="stateCall === 'calling'">
-        <span>ligando</span>
+      <div
+        v-if="stateCall === 'calling'"
+        style="
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        "
+      >
+        <!--<span>ligando</span>
         <button @click="desligar">cancelar</button>
-        <button @click="atender">atendeu</button>
-      </div>
-
-      <div v-if="stateCall === 'inCall'">
-        <span>durante</span>
-        <button @click="desligar">desligar</button>
+        <button @click="atender">atendeu</button>-->
+        <div class="dial-input" style="">
+          <div
+            class="input-container, column"
+            style="margin-bottom: 3vh; font-size: 2vh"
+          >
+            <span style="color: white; margin-bottom: 10px">LIGANDO</span>
+          </div>
+          <div @click="recebendo">
+            <img
+              src="/src/assets/icons/predio.jpg"
+              alt=""
+              style="opacity: 1; border: none"
+            />
+          </div>
+          <div style="margin-top: 3vh; font-size: 2.5vh">
+            <span style="color: white">Marcos</span>
+          </div>
+          <div
+            @click="desligar"
+            style="
+              display: flex;
+              justify-content: center;
+              text-align: center;
+              align-items: center;
+              background-color: red;
+              border-radius: 3vh;
+            "
+          >
+            <button>
+              <img
+                src="../assets/icons/recusar.svg"
+                style="height: 4vh; width: 4vh"
+              />
+            </button>
+            <span style="color: white">CANCELAR</span>
+          </div>
+        </div>
       </div>
 
       <div v-if="stateCall === 'receiving'">
-        <span>recebendo</span>
-        <button @click="atender">atender</button>
-        <button @click="desligar">cancelar</button>
+        <div class="dial-input" style="">
+          <div
+            class="input-container, column"
+            style="margin-bottom: 3vh; font-size: 2vh"
+          >
+            <span style="color: white; margin-bottom: 10px"
+              >Chamada recebida</span
+            >
+          </div>
+          <div>
+            <img
+              src="/src/assets/icons/predio.jpg"
+              alt=""
+              style="opacity: 1; border: none"
+            />
+          </div>
+          <div style="margin-top: 3vh; font-size: 2.5vh">
+            <span style="color: white">Marcos</span>
+          </div>
+          <div
+            @click="atender"
+            style="
+              display: flex;
+              justify-content: center;
+              text-align: center;
+              align-items: center;
+              background-color: green;
+              border-radius: 3vh;
+            "
+          >
+            <button>
+              <img src="../assets/icons/atender.svg" alt="" />
+            </button>
+            <span>ATENDER</span>
+          </div>
+          <div
+            @click="desligar"
+            style="
+              display: flex;
+              justify-content: center;
+              text-align: center;
+              align-items: center;
+              background-color: red;
+              border-radius: 3vh;
+            "
+          >
+            <button>
+              <img
+                src="../assets/icons/recusar.svg"
+                style="height: 4vh; width: 4vh"
+              />
+            </button>
+            <span style="color: white">CANCELAR</span>
+          </div>
+        </div>
+      </div>
+
+      <div
+        v-if="stateCall === 'inCall'"
+        style="color: white"
+        class="column, input-container"
+      >
+        <div class="input-container">
+          <div>
+            <span>Marcos</span>
+            <span>Chamada em andamento</span>
+            <span>cronometro</span>
+          </div>
+          <div class="row">
+            <span>silenciar</span>
+            <span>pausar</span>
+            <span>teclado</span>
+          </div>
+          <button @click="desligar" class="my-button">
+            <span class="material-symbols-outlined"> call_end </span>
+            <span>DESLIGAR</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -134,12 +254,14 @@
 
 <script>
 export default {
-  
   data() {
     return {
       numeroDiscado: "",
-      visible: true,
+      visible: false,
       stateCall: "initial", // initial, calling, inCall, receiving
+      closedIcon: "../src/assets/icons/primeiro-estado.svg",
+      openIcon: "../src/assets/icons/X.svg",
+      iconPath: "../src/assets/icons/primeiro-estado.svg",
     };
   },
   methods: {
@@ -153,7 +275,12 @@ export default {
     },
     alterVisible() {
       this.visible = !this.visible;
-      console.log(this.visible);
+      this.iconPath = this.visible ? this.openIcon : this.closedIcon; // Altera o ícone com base no estado de visibilidade
+
+      if (this.visible) {
+        this.stateCall = "initial";
+        this.numeroDiscado = "";
+      }
     },
     recebendo() {
       this.stateCall = "receiving";
@@ -225,11 +352,13 @@ export default {
   justify-content: center;
   margin-bottom: 10px;
 }
+
 .column {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .box {
   width: 300px;
   height: 100px;
@@ -262,9 +391,11 @@ export default {
 .input-container {
   margin-bottom: 10px;
 }
+
 .actions {
   margin-top: 10px;
 }
+
 .actions button {
   margin-right: 10px;
 }
@@ -282,6 +413,34 @@ export default {
 }
 
 .ligar-button i {
-  color: white; /* Cor do ícone */
+  color: white;
+  /* Cor do ícone */
+}
+
+.calling-state {
+  background-color: #151616;
+  /* Altere a cor de fundo para preto para o estado 'calling' */
+}
+
+.my-button {
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.fas {
+  color: white;
+  margin-right: 5px;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 </style>
