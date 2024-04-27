@@ -8,16 +8,11 @@
 </template>
 
 <script>
-import PhoneIcon from './components/PhoneIcon.vue';
-import PhoneDisplay from './components/PhoneDisplay.vue';
-import PhoneKeypad from './components/PhoneKeyPad.vue';
-
+import Inicial from './components/Inicial.vue';
 export default {
   name: 'App',
   components: {
-    PhoneIcon,
-    PhoneDisplay,
-    PhoneKeypad
+    Inicial,
   },
   data() {
     return {

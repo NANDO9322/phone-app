@@ -1,13 +1,13 @@
 import { createRouter, createMemoryHistory } from 'vue-router';
-import DialPad from '../components/DialPad.vue';
+import Inicial from '../components/Inicial.vue';
 
 const router = createRouter({
   history: createMemoryHistory(),
   routes: [
     {
       path: '/',
-      name: 'DialPad',
-      component: DialPad
+      name: 'Inicial',
+      component: Inicial
     }
   ]
 });
