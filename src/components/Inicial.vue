@@ -625,18 +625,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.phone-container {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #6390d9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 100%;
-  height: auto;
-}
+
 
 @keyframes efeito-inside {
   0% {
