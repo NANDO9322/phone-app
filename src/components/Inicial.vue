@@ -30,9 +30,10 @@
           flex-direction: column;
           justify-content: center;
           align-items: center;
+          
         "
       >
-        <div class="dial-input" style="">
+        <div class="dial-input">
           <div class="input-container, column" style="margin-bottom: 3vh;">
             <span style="color: white; margin-bottom: 10px"
               >DISQUE POR AQUI</span
@@ -47,9 +48,9 @@
         </div>
         <div
           class="dial-pad"
-          style="background-color: white; width: 30vh; padding-top: 2vh"
+          style="background-color: white; width: 30vh; height: 30vh; padding-top: 2vh;"
         >
-          <div class="row" style=" width: 25vh;">
+          <div class="row" style=" width: 25vh; margin-left: 1.5vh">
             <button @click="addDigit(1)" class="circular-button">1</button>
             <button @click="addDigit(2)" class="circular-button">
               2<span></span>
@@ -58,7 +59,7 @@
               3<span></span>
             </button>
           </div>
-          <div class="row" style=" width: 25vh;">
+          <div class="row" style=" width: 25vh; margin-left: 1.5vh">
             <button @click="addDigit(4)" class="circular-button">
               4<span></span>
             </button>
@@ -69,7 +70,7 @@
               6<span></span>
             </button>
           </div>
-          <div class="row" style=" width: 25vh;">
+          <div class="row" style=" width: 25vh; margin-left: 1.5vh">
             <button @click="addDigit(7)" class="circular-button">
               7<span></span>
             </button>
@@ -80,7 +81,7 @@
               9<span></span>
             </button>
           </div> 
-          <div class="row"style=" width: 25vh;">
+          <div class="row" style=" width: 25vh; margin-left: 1.5vh">
             <button
               @click="addDigit('*')"
               style="border: none; ;"
@@ -97,7 +98,7 @@
               #
             </button>
           </div>
-          <div class="actions, row" style=" width: 23vh; justify-content: end;">
+          <div class="actions, row" style="width: 25vh; margin-left: 8.5vh; margin-top: -.5vh; ">
             <button
               @click="ligar"
               class="ligar-button"
@@ -113,7 +114,7 @@
             </button>
           </div>
         </div>
-        <div class="row">
+        <div class="row, row1" style="margin-top: 3vh;">
           <div>
             <img src="../assets/icons/historico.svg" alt="">
             <span>Histórico</span>
@@ -124,6 +125,7 @@
           </div>
           <div>
             <img src="../assets/icons/dial.png" alt="">
+            <span>Discar</span>
           </div>
         </div>
       </div>
@@ -137,9 +139,6 @@
           align-items: center;
         "
       >
-        <!--<span>ligando</span>
-        <button @click="desligar">cancelar</button>
-        <button @click="atender">atendeu</button>-->
         <div class="dial-input" style="">
           <div
             class="input-container, column"
@@ -311,7 +310,17 @@
             </div>
           </div>
 
-          <button @click="desligar" class="my-button">
+          <button @click="desligar" class="my-button" style="
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+                background-color: red;
+                border-radius: 3vh;
+                width: 100%;
+                gap: 15px;
+                font-weight: bolder;
+              ">
             <img
               src="../assets/icons/recusar.svg"
               style="height: 4vh; width: 4vh"
@@ -330,27 +339,27 @@ export default {
     return {
       numeroDiscado: "",
       visible: false,
-      stateCall: "initial", // initial, calling, inCall, receiving
+      stateCall: "initial",
       closedIcon: "../src/assets/icons/primeiro-estado.svg",
       openIcon: "../src/assets/icons/X.svg",
       iconPath: "../src/assets/icons/primeiro-estado.svg",
-      tempoDecorrido: "00:00:00", // Propriedade para armazenar o tempo decorrido
-      cronometro: null, // Referência ao cronômetro
-      startTime: null, // Tempo de início do cronômetro
+      tempoDecorrido: "00:00:00", 
+      cronometro: null, 
+      startTime: null, 
     };
   },
   methods: {
     addDigit(digit) {
-      // Adiciona o dígito ao número discado
+      
       this.numeroDiscado += digit.toString();
     },
     limpar() {
-      // Limpa o número digitado
+      
       this.numeroDiscado = "";
     },
     alterVisible() {
       this.visible = !this.visible;
-      this.iconPath = this.visible ? this.openIcon : this.closedIcon; // Altera o ícone com base no estado de visibilidade
+      this.iconPath = this.visible ? this.openIcon : this.closedIcon; 
 
       if (this.visible) {
         this.stateCall = "initial";
@@ -372,7 +381,7 @@ export default {
     rejeitar() {
       this.stateCall = "initial";
     },
-    // Método para iniciar o cronômetro
+    
     iniciarCronometro() {
       this.startTime = Date.now();
       this.cronometro = setInterval(() => {
@@ -381,18 +390,18 @@ export default {
       }, 1000);
     },
 
-    // Método para pausar o cronômetro
+
     pausarCronometro() {
       clearInterval(this.cronometro);
     },
 
-    // Método para reiniciar o cronômetro
+    
     reiniciarCronometro() {
       clearInterval(this.cronometro);
       this.tempoDecorrido = "00:00:00";
     },
 
-    // Método para formatar o tempo em HH:MM:SS
+   
     formatarTempo(milissegundos) {
       const segundos = Math.floor(milissegundos / 1000);
       const horas = Math.floor(segundos / 3600);
@@ -403,13 +412,12 @@ export default {
       )}`;
     },
 
-    // Método auxiliar para adicionar zero à esquerda, se necessário
+    
     padZero(num) {
       return (num < 10 ? "0" : "") + num;
     },
   },
   watch: {
-    // Inicie o cronômetro quando a chamada estiver em andamento
     stateCall(newValue) {
       if (newValue === "inCall") {
         this.iniciarCronometro();
@@ -473,6 +481,29 @@ export default {
   margin-bottom: 10px;
 }
 
+.row1 {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3vh;
+    margin-right: vh;
+  }
+  .row1 div {
+    text-align: center;
+    flex-grow: 1;
+  }
+  .row1 img {
+    width: 35px; 
+    height: 5vh;
+    margin-bottom: 5px; 
+    margin-right: 2vh;
+  }
+  .row1 span {
+    font-size: 14px; 
+    display: block;
+    margin-right: 1vh;
+
+  }
+
 .column {
   display: flex;
   flex-direction: column;
@@ -488,8 +519,8 @@ export default {
 }
 
 .circular-button {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   border: none;
   border-radius: 50%;
   font-size: 1.5rem;
@@ -524,8 +555,8 @@ export default {
   background-color: #28b73c;
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -534,12 +565,11 @@ export default {
 
 .ligar-button i {
   color: white;
-  /* Cor do ícone */
+
 }
 
 .calling-state {
   background-color: #151616;
-  /* Altere a cor de fundo para preto para o estado 'calling' */
 }
 
 .my-button {
@@ -578,7 +608,6 @@ export default {
   height: 150px;
   animation: efeito-container 3s infinite linear;
   animation-delay: -1s;
-  /* Atraso para iniciar após 1 segundo da animação anterior */
 }
 
 .efeito {
@@ -586,7 +615,6 @@ export default {
   height: 200px;
   animation: efeito 3s infinite linear;
   animation-delay: -2s;
-  /* Atraso para iniciar após 2 segundos da animação anterior */
 }
 
 .efeito,
