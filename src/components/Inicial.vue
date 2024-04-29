@@ -1,17 +1,18 @@
 <template>
-  <div>
+  <div class="phone-container">
     <button class="button-topper" @click="alterVisible">
       <img :src="iconPath" alt="" />
     </button>
-    <button @click="recebendo">Recebendo ligacao</button>
-
-    <div v-if="visible" :class="{
-      'telefone-topper': true,
-      'calling-state':
-        stateCall === 'calling' ||
-        stateCall === 'inCall' ||
-        stateCall === 'receiving',
-    }" style="
+    <div
+      v-if="visible"
+      :class="{
+        'telefone-topper': true,
+        'calling-state':
+          stateCall === 'calling' ||
+          stateCall === 'inCall' ||
+          stateCall === 'receiving',
+      }"
+      style="
         height: 55vh;
         width: 30vh;
         border-radius: 30px;
@@ -19,22 +20,36 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-      ">
-      <div v-if="stateCall === 'initial'" style="
+      "
+    >
+      <div
+        v-if="stateCall === 'initial'"
+        style="
           height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-        ">
+        "
+      >
         <div class="dial-input" style="">
-          <div class="input-container, column" style="margin-bottom: 3vh">
-            <span style="color: white; margin-bottom: 10px">DISQUE POR AQUI</span>
-            <input class="box" type="text" v-model="numeroDiscado" style="height: 3vh; width: 25vh" />
+          <div class="input-container, column" style="margin-bottom: 3vh;">
+            <span style="color: white; margin-bottom: 10px"
+              >DISQUE POR AQUI</span
+            >
+            <input
+              class="box"
+              type="text"
+              v-model="numeroDiscado"
+              style="height: 3vh; width: 25vh"
+            />
           </div>
         </div>
-        <div class="dial-pad" style="background-color: white; width: 30vh; padding-top: 2vh">
-          <div class="row">
+        <div
+          class="dial-pad"
+          style="background-color: white; width: 30vh; padding-top: 2vh"
+        >
+          <div class="row" style=" width: 25vh;">
             <button @click="addDigit(1)" class="circular-button">1</button>
             <button @click="addDigit(2)" class="circular-button">
               2<span></span>
@@ -43,7 +58,7 @@
               3<span></span>
             </button>
           </div>
-          <div class="row">
+          <div class="row" style=" width: 25vh;">
             <button @click="addDigit(4)" class="circular-button">
               4<span></span>
             </button>
@@ -54,7 +69,7 @@
               6<span></span>
             </button>
           </div>
-          <div class="row">
+          <div class="row" style=" width: 25vh;">
             <button @click="addDigit(7)" class="circular-button">
               7<span></span>
             </button>
@@ -64,38 +79,72 @@
             <button @click="addDigit(9)" class="circular-button">
               9<span></span>
             </button>
-          </div>
-          <div class="row">
-            <button @click="addDigit('*')" style="border: none" class="circular-button">
+          </div> 
+          <div class="row"style=" width: 25vh;">
+            <button
+              @click="addDigit('*')"
+              style="border: none; ;"
+              class="circular-button"
+            >
               *
             </button>
             <button @click="addDigit(0)" class="circular-button">0</button>
-            <button @click="addDigit('#')" style="border: none" class="circular-button">
+            <button
+              @click="addDigit('#')"
+              style="border: none;"
+              class="circular-button"
+            >
               #
             </button>
           </div>
-          <div class="actions, row">
-            <button @click="ligar" class="ligar-button" style="margin-left: 6vh">
+          <div class="actions, row" style=" width: 23vh; justify-content: end;">
+            <button
+              @click="ligar"
+              class="ligar-button"
+              
+            >
               <img src="../assets/icons/ligar.svg" alt="" />
             </button>
-            <button @click="limpar" style="background-color: white; border: none; margin-left: 2vh">
+            <button
+              @click="limpar"
+              style="background-color: white; border: none; margin-left: 2vh"
+            >
               <img src="../assets/icons/apagar.svg" alt="" />
             </button>
           </div>
         </div>
+        <div class="row">
+          <div>
+            <img src="../assets/icons/historico.svg" alt="">
+            <span>Histórico</span>
+          </div>
+          <div>
+            <img src="../assets/icons/contatos.svg" alt="">
+            <span>Contatos</span>
+          </div>
+          <div>
+            <img src="../assets/icons/dial.png" alt="">
+          </div>
+        </div>
       </div>
 
-      <div v-if="stateCall === 'calling'" style="
+      <div
+        v-if="stateCall === 'calling'"
+        style="
           height: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
-        ">
+        "
+      >
         <!--<span>ligando</span>
         <button @click="desligar">cancelar</button>
         <button @click="atender">atendeu</button>-->
         <div class="dial-input" style="">
-          <div class="input-container, column" style="margin-bottom: 3vh; font-size: 2vh">
+          <div
+            class="input-container, column"
+            style="margin-bottom: 3vh; font-size: 2vh"
+          >
             <span style="color: white; margin-bottom: 10px">LIGANDO</span>
           </div>
           <div @click="recebendo">
@@ -110,19 +159,25 @@
           <div style="margin-top: 3vh; font-size: 2.5vh">
             <span style="color: white">Marcos</span>
           </div>
-          <div  >
-            <button @click="desligar" style="
-              display: flex;
-              justify-content: center;
-              text-align: center;
-              align-items: center;
-              background-color: red;
-              border-radius: 3vh;
-              width: 100%;
-              gap: 15px;
-              font-weight: bolder;
-            ">
-              <img src="../assets/icons/recusar.svg" style="height: 4vh; width: 4vh" />
+          <div>
+            <button
+              @click="desligar"
+              style="
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+                background-color: red;
+                border-radius: 3vh;
+                width: 100%;
+                gap: 15px;
+                font-weight: bolder;
+              "
+            >
+              <img
+                src="../assets/icons/recusar.svg"
+                style="height: 4vh; width: 4vh"
+              />
               <span style="color: white">CANCELAR</span>
             </button>
           </div>
@@ -131,10 +186,17 @@
 
       <div v-if="stateCall === 'receiving'">
         <div class="dial-input" style="">
-          <div class="input-container, column" style="margin-bottom: 3vh; font-size: 2vh">
-            <span style="color: white; margin-bottom: 10px">Chamada recebida</span>
+          <div
+            class="input-container, column"
+            style="margin-bottom: 3vh; font-size: 2vh"
+          >
+            <span style="color: white; margin-bottom: 10px"
+              >Chamada recebida</span
+            >
           </div>
-          <div style="display: flex; align-items: center; justify-content: center;">
+          <div
+            style="display: flex; align-items: center; justify-content: center"
+          >
             <div class="efeito">
               <div class="efeito__container">
                 <div class="efeito__container__inside">
@@ -147,37 +209,113 @@
             <span style="color: white">Marcos</span>
           </div>
 
-          <div style="display: flex; flex-direction: column; gap: 15px; align-items: center">
-            <button @click="atender"
-              style="width: 100%; border: none; font-size: 25px; padding: 10px; display: flex; justify-content: center; text-align: center; align-items: center; background-color: green; border-radius: 3vh; gap: 15px;">
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 15px;
+              align-items: center;
+            "
+          >
+            <button
+              @click="atender"
+              style="
+                width: 100%;
+                border: none;
+                font-size: 25px;
+                padding: 10px;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+                background-color: green;
+                border-radius: 3vh;
+                gap: 15px;
+              "
+            >
               <img src="../assets/icons/ligar.svg" alt="" />
-              <span style="font-weight: bolder; color: #FFFFFF;">ATENDER</span>
+              <span style="font-weight: bolder; color: #ffffff">ATENDER</span>
             </button>
 
-
-            <button @click="desligar"
-              style="width: 75%; border: none; display: flex; justify-content: center; text-align: center; align-items: center; background-color: red; border-radius: 3vh; gap: 15px;">
-              <img src="../assets/icons/recusar.svg" style="height: 4vh; width: 4vh" />
-              <span style="font-weight: bolder; color: #FFFFFF;">REJEITAR</span>
+            <button
+              @click="desligar"
+              style="
+                width: 75%;
+                border: none;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+                background-color: red;
+                border-radius: 3vh;
+                gap: 15px;
+              "
+            >
+              <img
+                src="../assets/icons/recusar.svg"
+                style="height: 4vh; width: 4vh"
+              />
+              <span style="font-weight: bolder; color: #ffffff">REJEITAR</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div v-if="stateCall === 'inCall'" style="color: white" class="column, input-container">
-        <div class="input-container">
-          <div>
-            <span>Marcos</span>
+      <div
+        v-if="stateCall === 'inCall'"
+        style="color: white"
+        class="column, input-container"
+      >
+        <div
+          class="input-container"
+          style="
+            height: 55vh;
+            width: 30vh;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          "
+        >
+          <div class="column" style="margin-bottom: 10vh">
+            <h1>Marcos</h1>
             <span>Chamada em andamento</span>
-            <span>cronometro</span>
+            <div class="row" style="margin-top: 20px">
+              <span style="color: white">{{ tempoDecorrido }}</span>
+            </div>
           </div>
-          <div class="row">
-            <span>silenciar</span>
-            <span>pausar</span>
-            <span>teclado</span>
+          <div class="row" style="margin-bottom: 6vh">
+            <div class="column" style="align-items: center; margin-right: 1vh;">
+              <img
+                src="../assets/icons/mute.svg"
+                alt=""
+                style="width: 30px; height: 30px"
+              />
+              <span>silenciar</span>
+            </div>
+            <div class="column" style="align-items: center; margin-right: 1vh;">
+              <img
+                src="../assets/icons/pausa.svg"
+                alt=""
+                style="width: 30px; height: 30px"
+              />
+              <span>pausar</span>
+            </div>
+            <div class="column">
+              <img
+                src="../assets/icons/dial.png"
+                alt=""
+                style="width: 30px; height: 30px"
+              />
+              <span>teclado</span>
+            </div>
           </div>
+
           <button @click="desligar" class="my-button">
-            <img src="../assets/icons/recusar.svg" style="height: 4vh; width: 4vh" />
+            <img
+              src="../assets/icons/recusar.svg"
+              style="height: 4vh; width: 4vh"
+            />
             <span>DESLIGAR</span>
           </button>
         </div>
@@ -196,6 +334,9 @@ export default {
       closedIcon: "../src/assets/icons/primeiro-estado.svg",
       openIcon: "../src/assets/icons/X.svg",
       iconPath: "../src/assets/icons/primeiro-estado.svg",
+      tempoDecorrido: "00:00:00", // Propriedade para armazenar o tempo decorrido
+      cronometro: null, // Referência ao cronômetro
+      startTime: null, // Tempo de início do cronômetro
     };
   },
   methods: {
@@ -230,6 +371,51 @@ export default {
     },
     rejeitar() {
       this.stateCall = "initial";
+    },
+    // Método para iniciar o cronômetro
+    iniciarCronometro() {
+      this.startTime = Date.now();
+      this.cronometro = setInterval(() => {
+        const elapsedTime = Date.now() - this.startTime;
+        this.tempoDecorrido = this.formatarTempo(elapsedTime);
+      }, 1000);
+    },
+
+    // Método para pausar o cronômetro
+    pausarCronometro() {
+      clearInterval(this.cronometro);
+    },
+
+    // Método para reiniciar o cronômetro
+    reiniciarCronometro() {
+      clearInterval(this.cronometro);
+      this.tempoDecorrido = "00:00:00";
+    },
+
+    // Método para formatar o tempo em HH:MM:SS
+    formatarTempo(milissegundos) {
+      const segundos = Math.floor(milissegundos / 1000);
+      const horas = Math.floor(segundos / 3600);
+      const minutos = Math.floor((segundos % 3600) / 60);
+      const seg = segundos % 60;
+      return `${this.padZero(horas)}:${this.padZero(minutos)}:${this.padZero(
+        seg
+      )}`;
+    },
+
+    // Método auxiliar para adicionar zero à esquerda, se necessário
+    padZero(num) {
+      return (num < 10 ? "0" : "") + num;
+    },
+  },
+  watch: {
+    // Inicie o cronômetro quando a chamada estiver em andamento
+    stateCall(newValue) {
+      if (newValue === "inCall") {
+        this.iniciarCronometro();
+      } else {
+        this.pausarCronometro();
+      }
     },
   },
 };
@@ -381,9 +567,6 @@ export default {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
-
-
-
 .efeito__container__inside {
   width: 100px;
   height: 100px;
@@ -413,6 +596,18 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.phone-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #6390d9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  height: auto;
 }
 
 @keyframes efeito-inside {
